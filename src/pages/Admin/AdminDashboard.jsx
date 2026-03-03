@@ -417,8 +417,9 @@ const AdminDashboard = () => {
 
   const stats = { turnover: "45,50,000", profit: "8,20,000", salesCount: 124 };
   
-  const goldRates = { '24K': 7200.00, '22K': 6650.00, '18K': 5400.00 };
-  const silverRates = { '990 Fine': 85.00, '925 Sterling': 78.00 };
+  // FIXED: All Gold & Silver Rates Added
+  const goldRates = { '24K': 7200.00, '22K': 6650.00, '18K': 5400.00, '14K': 4200.00, '9K': 2700.00 };
+  const silverRates = { '990 Fine': 85.00, '970 Fine': 83.00, '958 Britannia': 81.00, '925 Sterling': 78.00 };
 
   // 9 Premium Products covering all filters
   const inventoryData = [
@@ -472,7 +473,7 @@ const AdminDashboard = () => {
           </div>
           <div className="flex items-center gap-4 text-sm font-medium">
             <div className="bg-[#121212] border border-[#DAA520]/30 px-4 py-2 rounded-lg flex items-center gap-2 text-[#DAA520]">
-              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Live Rates
+              <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Live Rates Active
             </div>
           </div>
         </header>
@@ -490,7 +491,7 @@ const AdminDashboard = () => {
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
             <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="bg-[#1a1a1a] rounded-xl border border-gray-700 shadow-2xl w-full max-w-3xl overflow-hidden flex flex-col max-h-[90vh]">
               <div className="px-6 py-4 border-b border-gray-800 flex justify-between items-center bg-[#121212]">
-                <h2 className="text-xl font-bold text-[#DAA520] flex items-center gap-2"><Package size={20} /> Add Purchase Stock</h2>
+                <h2 className="text-xl font-bold text-[#DAA520] flex items-center gap-2"><Package size={20} /> Add Purchase/Exchange Stock</h2>
                 <button onClick={() => setShowAddModal(false)} className="text-gray-400 hover:text-white transition-colors p-1"><X size={24} /></button>
               </div>
               <div className="p-6 overflow-y-auto custom-scrollbar">
@@ -501,15 +502,63 @@ const AdminDashboard = () => {
                       <p className="font-medium text-white mb-1">Click to upload product image</p>
                     </div>
                   </div>
+                  
+                  {/* EXPANDED FIELDS LIST */}
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div><label className="block text-[11px] text-gray-400 mb-1">Product Name</label><input type="text" className="w-full bg-[#121212] border border-gray-700 rounded p-2.5 text-white outline-none" /></div>
-                    <div><label className="block text-[11px] text-[#DAA520] mb-1 font-bold">Gross Weight (gm)</label><input type="number" className="w-full bg-[#121212] border border-gray-700 rounded p-2.5 text-white outline-none" /></div>
+                    <div>
+                      <label className="block text-[11px] text-gray-400 mb-1 uppercase tracking-wide">Product ID</label>
+                      <input type="text" placeholder="e.g. G-1005" className="w-full bg-[#121212] border border-gray-700 rounded p-2.5 text-white outline-none" />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] text-gray-400 mb-1 uppercase tracking-wide">Product Name</label>
+                      <input type="text" placeholder="Enter product name" className="w-full bg-[#121212] border border-gray-700 rounded p-2.5 text-white outline-none" />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] text-gray-400 mb-1 uppercase tracking-wide">Category</label>
+                      <select className="w-full bg-[#121212] border border-gray-700 rounded p-2.5 text-white outline-none">
+                        <option>GOLD</option>
+                        <option>SILVER</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-[11px] text-gray-400 mb-1 uppercase tracking-wide">Purity</label>
+                      <select className="w-full bg-[#121212] border border-gray-700 rounded p-2.5 text-white outline-none">
+                        <option>24K</option>
+                        <option>22K</option>
+                        <option>18K</option>
+                        <option>14K</option>
+                        <option>9K</option>
+                        <option>990 Fine</option>
+                        <option>970 Fine</option>
+                        <option>958 Britannia</option>
+                        <option>925 Sterling</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-[11px] text-[#DAA520] mb-1 font-bold uppercase tracking-wide">Gross Weight (gm)</label>
+                      <input type="number" placeholder="0.000" className="w-full bg-[#121212] border border-gray-700 rounded p-2.5 text-white outline-none" />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] text-gray-400 mb-1 uppercase tracking-wide">Stock Quantity (Pcs)</label>
+                      <input type="number" placeholder="1" className="w-full bg-[#121212] border border-gray-700 rounded p-2.5 text-white outline-none" />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] text-gray-400 mb-1 uppercase tracking-wide">HSN / SAC</label>
+                      <input type="text" placeholder="7113" className="w-full bg-[#121212] border border-gray-700 rounded p-2.5 text-white outline-none" />
+                    </div>
+                    <div>
+                      <label className="block text-[11px] text-[#DAA520] mb-1 font-bold uppercase tracking-wide">Stock Type</label>
+                      <select className="w-full bg-[#121212] border border-gray-700 rounded p-2.5 text-[#DAA520] font-bold outline-none">
+                        <option value="PURCHASE">PURCHASE</option>
+                        <option value="EXCHANGE">EXCHANGE</option>
+                      </select>
+                    </div>
                   </div>
                 </form>
               </div>
               <div className="px-6 py-4 border-t border-gray-800 bg-[#121212] flex justify-end gap-3">
-                <button onClick={() => setShowAddModal(false)} className="px-6 py-2 rounded font-bold text-sm text-gray-400">Cancel</button>
-                <button className="px-6 py-2 rounded font-bold text-sm bg-[#DAA520] hover:bg-[#B8860B] text-black">Save</button>
+                <button onClick={() => setShowAddModal(false)} className="px-6 py-2 rounded font-bold text-sm text-gray-400 hover:text-white transition-all">Cancel</button>
+                <button className="px-6 py-2 rounded font-bold text-sm bg-[#DAA520] hover:bg-[#B8860B] text-black transition-all">Save Stock</button>
               </div>
             </motion.div>
           </div>
